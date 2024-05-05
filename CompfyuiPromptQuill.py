@@ -40,7 +40,7 @@ class Client:
 			response_data = response.json()
 			return response_data
 		else:
-			return response.text
+			return 'Something went wrong, did you install Prompt Quill? https://github.com/osi1880vr/prompt_quill'
 
 	def generate(self, query, model=None):
 		# Prepare your JSON data
