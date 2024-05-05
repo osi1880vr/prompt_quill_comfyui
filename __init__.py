@@ -52,6 +52,6 @@ else:
     pip_install = [sys.executable, '-m', 'pip', 'install']
     mim_install = [sys.executable, '-m', 'mim', 'install']
 
-process_wrap(pip_install + ["-r", "requirements.txt"], os.path.dirname(__file__))
+process_wrap(os.path.dirname(__file__))
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']
