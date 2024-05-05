@@ -42,7 +42,7 @@ class Client:
 		else:
 			return response.text
 
-	def generate(self, query, model):
+	def generate(self, query, model=None):
 		# Prepare your JSON data
 		payload = {'query': query,
 				   'model': model}
@@ -95,6 +95,47 @@ class PromptQuillGenerate:
 
 		return (response['prompt'], response['neg_prompt'],)
 
+class PromptQuillGenerateConditioning:
+	def __init__(self):
+		pass
+
+	@classmethod
+	def INPUT_TYPES(s):
+		return {
+			"required": {
+				"prompt": ("STRING", {
+					"multiline": True,
+					"default": "A cute cat?"
+				}),
+				"url": ("STRING", {
+					"multiline": False,
+					"default": default_url
+				}),
+				"clip": ("CLIP", )
+			},
+		}
+
+	RETURN_TYPES = ("STRING", "STRING","CONDITIONING","CONDITIONING",)
+	RETURN_NAMES = ("Prompt", "NegativePrompt","Prompt Conditioning", "Negative Conditioning",)
+
+	FUNCTION = "prompt_quill_generate"
+	CATEGORY = "PromptQuill"
+
+	def encode(self, clip, text):
+		tokens = clip.tokenize(text)
+		cond, pooled = clip.encode_from_tokens(tokens, return_pooled=True)
+		return ([[cond, {"pooled_output": pooled}]], )
+
+	def prompt_quill_generate(self, prompt, url, clip):
+		client = Client(url=url)
+
+		response = client.generate(query=prompt)
+
+		prompt_encoded = self.encode(clip=clip, text=response['prompt'])
+		neg_prompt_encoded = self.encode(clip=clip, text=response['neg_prompt'])
+
+		return (response['prompt'], response['neg_prompt'],prompt_encoded[0],neg_prompt_encoded[0],)
+
 
 class PromptQuillSail:
 	def __init__(self):
@@ -143,6 +184,7 @@ class PromptQuillSail:
 	FUNCTION = "prompt_quill_sail"
 	CATEGORY = "PromptQuill"
 
+
 	def prompt_quill_sail(self, prompt, distance, summary, rephrase, rephrase_prompt, add_style, style, add_search,
 						  search, reset_journey, url):
 		client = Client(url=url)
@@ -151,15 +193,90 @@ class PromptQuillSail:
 							   rephrase_prompt=rephrase_prompt, add_style=add_style, style=style, add_search=add_search,
 							   search=search, reset_journey=reset_journey)
 
+
 		return (response['prompt'], response['neg_prompt'],)
+
+
+
+class PromptQuillSailConditioning:
+	def __init__(self):
+		pass
+
+	@classmethod
+	def IS_CHANGED(cls, **kwargs):
+		return float("NaN")
+
+	@classmethod
+	def INPUT_TYPES(s):
+		return {
+			"required": {
+				"prompt": ("STRING", {
+					"multiline": True,
+					"default": "A cute cat?"
+				}),
+				"distance": ("INT", {"default": 20, "min": 1, "max": 10000, "step": 1}),
+				"summary": (("false", "true"), {"default": "false"}),
+				"rephrase": (("false", "true"), {"default": "false"}),
+				"rephrase_prompt": ("STRING", {
+					"multiline": True,
+					"default": ""
+				}),
+				"add_style": (("false", "true"), {"default": "false"}),
+				"style": ("STRING", {
+					"multiline": True,
+					"default": ""
+				}),
+				"add_search": (("false", "true"), {"default": "false"}),
+				"search": ("STRING", {
+					"multiline": True,
+					"default": ""
+				}),
+				"reset_journey": (("false", "true"), {"default": "false"}),
+				"url": ("STRING", {
+					"multiline": False,
+					"default": default_url
+				}),
+				"clip": ("CLIP", )
+			},
+		}
+
+	RETURN_TYPES = ("STRING", "STRING","CONDITIONING","CONDITIONING",)
+	RETURN_NAMES = ("Prompt", "NegativePrompt","Prompt Conditioning", "Negative Conditioning")
+
+	FUNCTION = "prompt_quill_sail"
+	CATEGORY = "PromptQuill"
+
+
+	def encode(self, clip, text):
+		tokens = clip.tokenize(text)
+		cond, pooled = clip.encode_from_tokens(tokens, return_pooled=True)
+		return ([[cond, {"pooled_output": pooled}]], )
+
+	def prompt_quill_sail(self, prompt, distance, summary, rephrase, rephrase_prompt, add_style, style, add_search,
+						  search, reset_journey, url, clip):
+		client = Client(url=url)
+
+		response = client.sail(query=prompt, distance=distance, summary=summary, rephrase=rephrase,
+							   rephrase_prompt=rephrase_prompt, add_style=add_style, style=style, add_search=add_search,
+							   search=search, reset_journey=reset_journey)
+
+		prompt_encoded = self.encode(clip=clip, text=response['prompt'])
+		neg_prompt_encoded = self.encode(clip=clip, text=response['neg_prompt'])
+
+		return (response['prompt'], response['neg_prompt'],prompt_encoded[0],neg_prompt_encoded[0],)
+
 
 
 NODE_CLASS_MAPPINGS = {
 	"PromptQuillGenerate": PromptQuillGenerate,
-	"PromptQuillSail": PromptQuillSail
+	"PromptQuillGenerateConditioning": PromptQuillGenerateConditioning,
+	"PromptQuillSail": PromptQuillSail,
+	"PromptQuillSailConditioning": PromptQuillSailConditioning,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
 	"PromptQuillGenerate": "Prompt Quill Generate",
-	"PromptQuillSail": "Prompt Quill Sailing"
+	"PromptQuillGenerateConditioning": "Prompt Quill Generate Conditioning",
+	"PromptQuillSail": "Prompt Quill Sailing",
+	"PromptQuillSailConditioning": "Prompt Quill Sailing to Conditioning",
 }
