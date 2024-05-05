@@ -28,6 +28,6 @@ A node that gives an ability to query Prompt Quill via given prompt.
 
 A node that does some real magic, based on the vast ocean of data Prompt Quill uses you go on a journey along the data and you find amazing prompts.
 This is an exploration feature more than create a prompt for a fixed input. each time you call it, it will create a new prompt, based on the most far context from the last run.
-
+Important: If you want to start a new journey from a new starting point you have to set journey_reset to true for at least one image and then back to false. Only that way you reset the journeys history on the Prompt Quill side. I did not yet find any better way as Comfyui is kind of stateless.
 
 More nodes will follow soon
