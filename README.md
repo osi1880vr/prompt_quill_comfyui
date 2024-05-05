@@ -14,7 +14,7 @@ To use this properly, you would need a running Prompt Quill API reachable from t
 
 **Or** 
 
-use the [compfyui manager](https://github.com/ltdrdata/ComfyUI-Manager) "install via git url".
+use the [compfyui manager](https://github.com/ltdrdata/ComfyUI-Manager) "install via git url" https://github.com/osi1880vr/prompt_quill_comfyui.
 
 ![pic](.meta/InstallViaManager.png)
 
