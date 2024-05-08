@@ -99,7 +99,7 @@ class PromptQuillGenerate:
 		response = client.generate(model=model, query=prompt)
 
 		if add_negative != 'false':
-			response['neg_prompt'] = f'{response["neg_prompt"],{negative}}'
+			response['neg_prompt'] = f'{response["neg_prompt"]},{negative}'
 
 		return (response['prompt'], response['neg_prompt'],)
 
@@ -145,7 +145,7 @@ class PromptQuillGenerateConditioning:
 		response = client.generate(query=prompt)
 
 		if add_negative != 'false':
-			response['neg_prompt'] = f'{response["neg_prompt"],{negative}}'
+			response['neg_prompt'] = f'{response["neg_prompt"]},{negative}'
 
 		prompt_encoded = self.encode(clip=clip, text=response['prompt'])
 		neg_prompt_encoded = self.encode(clip=clip, text=response['neg_prompt'])
@@ -215,7 +215,7 @@ class PromptQuillSail:
 							   search=search, reset_journey=reset_journey)
 
 		if add_negative != 'false':
-			response['neg_prompt'] = f'{response["neg_prompt"],{negative}}'
+			response['neg_prompt'] = f'{response["neg_prompt"]},{negative}'
 
 		return (response['prompt'], response['neg_prompt'],)
 
@@ -289,7 +289,7 @@ class PromptQuillSailConditioning:
 							   search=search, reset_journey=reset_journey)
 
 		if add_negative != 'false':
-			response['neg_prompt'] = f'{response["neg_prompt"],{negative}}'
+			response['neg_prompt'] = f'{response["neg_prompt"]},{negative}'
 
 		prompt_encoded = self.encode(clip=clip, text=response['prompt'])
 		neg_prompt_encoded = self.encode(clip=clip, text=response['neg_prompt'])
