@@ -288,7 +288,7 @@ class PromptQuillSailConditioning:
 							   rephrase_prompt=rephrase_prompt, add_style=add_style, style=style, add_search=add_search,
 							   search=search, reset_journey=reset_journey)
 
-		if add_negative != 'false':
+		if add_negative is True:
 			response['neg_prompt'] = f'{response["neg_prompt"]},{negative}'
 
 		prompt_encoded = self.encode(clip=clip, text=response['prompt'])
