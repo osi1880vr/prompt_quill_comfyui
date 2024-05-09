@@ -98,7 +98,7 @@ class PromptQuillGenerate:
 
 		response = client.generate(model=model, query=prompt)
 
-		if add_negative != 'false':
+		if add_negative is True:
 			response['neg_prompt'] = f'{response["neg_prompt"]},{negative}'
 
 		return (response['prompt'], response['neg_prompt'],)
