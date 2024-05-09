@@ -115,7 +115,7 @@ class PromptQuillGenerateConditioning:
 					"multiline": True,
 					"default": "A cute cat?"
 				}),
-				"add_negative": (("false", "true"), {"default": "false"}),
+				"add_negative": ("BOOLEAN", {"default": True}),
 				"negative": ("STRING", {
 					"multiline": True,
 					"default": ""
@@ -170,28 +170,28 @@ class PromptQuillSail:
 					"default": "A cute cat?"
 				}),
 				"distance": ("INT", {"default": 20, "min": 1, "max": 10000, "step": 1}),
-				"summary": (("false", "true"), {"default": "false"}),
-				"rephrase": (("false", "true"), {"default": "false"}),
+				"summary": ("BOOLEAN", {"default": True}),
+				"rephrase": ("BOOLEAN", {"default": True}),
 				"rephrase_prompt": ("STRING", {
 					"multiline": True,
 					"default": ""
 				}),
-				"add_style": (("false", "true"), {"default": "false"}),
+				"add_style": ("BOOLEAN", {"default": True}),
 				"style": ("STRING", {
 					"multiline": True,
 					"default": ""
 				}),
-				"add_search": (("false", "true"), {"default": "false"}),
+				"add_search": ("BOOLEAN", {"default": True}),
 				"search": ("STRING", {
 					"multiline": True,
 					"default": ""
 				}),
-				"add_negative": (("false", "true"), {"default": "false"}),
+				"add_negative": ("BOOLEAN", {"default": True}),
 				"negative": ("STRING", {
 					"multiline": True,
 					"default": ""
 				}),
-				"reset_journey": (("false", "true"), {"default": "false"}),
+				"reset_journey": ("BOOLEAN", {"default": True}),
 				"url": ("STRING", {
 					"multiline": False,
 					"default": default_url
@@ -238,28 +238,28 @@ class PromptQuillSailConditioning:
 					"default": "A cute cat?"
 				}),
 				"distance": ("INT", {"default": 20, "min": 1, "max": 10000, "step": 1}),
-				"summary": (("false", "true"), {"default": "false"}),
-				"rephrase": (("false", "true"), {"default": "false"}),
+				"summary": ("BOOLEAN", {"default": True}),
+				"rephrase": ("BOOLEAN", {"default": True}),
 				"rephrase_prompt": ("STRING", {
 					"multiline": True,
 					"default": ""
 				}),
-				"add_style": (("false", "true"), {"default": "false"}),
+				"add_style": ("BOOLEAN", {"default": True}),
 				"style": ("STRING", {
 					"multiline": True,
 					"default": ""
 				}),
-				"add_search": (("false", "true"), {"default": "false"}),
+				"add_search": ("BOOLEAN", {"default": True}),
 				"search": ("STRING", {
 					"multiline": True,
 					"default": ""
 				}),
-				"add_negative": (("false", "true"), {"default": "false"}),
+				"add_negative": ("BOOLEAN", {"default": True}),
 				"negative": ("STRING", {
 					"multiline": True,
 					"default": ""
 				}),
-				"reset_journey": (("false", "true"), {"default": "false"}),
+				"reset_journey": ("BOOLEAN", {"default": True}),
 				"url": ("STRING", {
 					"multiline": False,
 					"default": default_url
