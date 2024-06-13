@@ -49,7 +49,7 @@ class Client:
 		return self.send_api_call(payload, self.generate_url)
 
 
-	def sail(self, query, distance, summary, rephrase, rephrase_prompt, add_style, style, add_search, search, reset_journey):
+	def sail(self, query, distance, summary, rephrase, rephrase_prompt, add_style, style, add_search, search, reset_journey,unload_llm):
 		payload = {'query': query,
 				   'distance': distance,
 				   'summary': summary,
@@ -59,7 +59,8 @@ class Client:
 				   'style': style,
 				   'add_search': add_search,
 				   'search': search,
-				   'reset_journey': reset_journey
+				   'reset_journey': reset_journey,
+				   'unload_llm': unload_llm
 				   }
 		return self.send_api_call(payload, self.sail_url)
 
@@ -192,6 +193,7 @@ class PromptQuillSail:
 					"default": ""
 				}),
 				"reset_journey": ("BOOLEAN", {"default": False}),
+				"unload_llm": ("BOOLEAN", {"default": False}),
 				"url": ("STRING", {
 					"multiline": False,
 					"default": default_url
@@ -207,12 +209,12 @@ class PromptQuillSail:
 
 
 	def prompt_quill_sail(self, prompt, distance, summary, rephrase, rephrase_prompt, add_style, style, add_search,
-						  search, add_negative, negative, reset_journey, url):
+						  search, add_negative, negative, reset_journey, unload_llm, url):
 		client = Client(url=url)
 
 		response = client.sail(query=prompt, distance=distance, summary=summary, rephrase=rephrase,
 							   rephrase_prompt=rephrase_prompt, add_style=add_style, style=style, add_search=add_search,
-							   search=search, reset_journey=reset_journey)
+							   search=search, reset_journey=reset_journey,unload_llm=unload_llm)
 
 		if add_negative != 'false':
 			response['neg_prompt'] = f'{response["neg_prompt"]},{negative}'
@@ -260,6 +262,7 @@ class PromptQuillSailConditioning:
 					"default": ""
 				}),
 				"reset_journey": ("BOOLEAN", {"default": False}),
+				"unload_llm": ("BOOLEAN", {"default": False}),
 				"url": ("STRING", {
 					"multiline": False,
 					"default": default_url
@@ -281,12 +284,12 @@ class PromptQuillSailConditioning:
 		return ([[cond, {"pooled_output": pooled}]], )
 
 	def prompt_quill_sail(self, prompt, distance, summary, rephrase, rephrase_prompt, add_style, style, add_search,
-						  search, add_negative, negative, reset_journey, url, clip):
+						  search, add_negative, negative, reset_journey,unload_llm, url, clip):
 		client = Client(url=url)
 
 		response = client.sail(query=prompt, distance=distance, summary=summary, rephrase=rephrase,
 							   rephrase_prompt=rephrase_prompt, add_style=add_style, style=style, add_search=add_search,
-							   search=search, reset_journey=reset_journey)
+							   search=search, reset_journey=reset_journey,unload_llm=unload_llm)
 
 		if add_negative is True:
 			response['neg_prompt'] = f'{response["neg_prompt"]},{negative}'
