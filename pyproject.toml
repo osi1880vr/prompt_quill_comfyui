@@ -1,0 +1,14 @@
+[project]
+name = "prompt_quill_comfyui"
+description = "Nodes:Use Prompt Quill in Comfyui"
+version = "1.0.0"
+license = "LICENSE"
+
+[project.urls]
+Repository = "https://github.com/osi1880vr/prompt_quill_comfyui"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = ""
+DisplayName = "prompt_quill_comfyui"
+Icon = ""
