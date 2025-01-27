@@ -49,8 +49,9 @@ class Client:
 		return self.send_api_call(payload, self.generate_url)
 
 
-	def sail(self, query, distance, summary, rephrase, rephrase_prompt, add_style, style, add_search, search, reset_journey,unload_llm):
+	def sail(self, query, use_all_trip, distance, summary, rephrase, rephrase_prompt, add_style, style, add_search, search, reset_journey,unload_llm):
 		payload = {'query': query,
+				   'use_all_trip': use_all_trip,
 				   'distance': distance,
 				   'summary': summary,
 				   'rephrase': rephrase,
@@ -170,6 +171,7 @@ class PromptQuillSail:
 					"multiline": True,
 					"default": "A cute cat?"
 				}),
+				"use_all_trip": ("BOOLEAN", {"default": False}),
 				"distance": ("INT", {"default": 20, "min": 1, "max": 10000, "step": 1}),
 				"summary": ("BOOLEAN", {"default": False}),
 				"rephrase": ("BOOLEAN", {"default": False}),
@@ -208,11 +210,11 @@ class PromptQuillSail:
 	CATEGORY = "PromptQuill"
 
 
-	def prompt_quill_sail(self, prompt, distance, summary, rephrase, rephrase_prompt, add_style, style, add_search,
+	def prompt_quill_sail(self, prompt, use_all_trip, distance, summary, rephrase, rephrase_prompt, add_style, style, add_search,
 						  search, add_negative, negative, reset_journey, unload_llm, url):
 		client = Client(url=url)
 
-		response = client.sail(query=prompt, distance=distance, summary=summary, rephrase=rephrase,
+		response = client.sail(query=prompt, use_all_trip=use_all_trip, distance=distance, summary=summary, rephrase=rephrase,
 							   rephrase_prompt=rephrase_prompt, add_style=add_style, style=style, add_search=add_search,
 							   search=search, reset_journey=reset_journey,unload_llm=unload_llm)
 
@@ -239,6 +241,7 @@ class PromptQuillSailConditioning:
 					"multiline": True,
 					"default": "A cute cat?"
 				}),
+				"use_all_trip": ("BOOLEAN", {"default": False}),
 				"distance": ("INT", {"default": 20, "min": 1, "max": 10000, "step": 1}),
 				"summary": ("BOOLEAN", {"default": False}),
 				"rephrase": ("BOOLEAN", {"default": False}),
@@ -283,11 +286,11 @@ class PromptQuillSailConditioning:
 		cond, pooled = clip.encode_from_tokens(tokens, return_pooled=True)
 		return ([[cond, {"pooled_output": pooled}]], )
 
-	def prompt_quill_sail(self, prompt, distance, summary, rephrase, rephrase_prompt, add_style, style, add_search,
+	def prompt_quill_sail(self, prompt, use_all_trip, distance, summary, rephrase, rephrase_prompt, add_style, style, add_search,
 						  search, add_negative, negative, reset_journey,unload_llm, url, clip):
 		client = Client(url=url)
 
-		response = client.sail(query=prompt, distance=distance, summary=summary, rephrase=rephrase,
+		response = client.sail(query=prompt, use_all_trip=use_all_trip, distance=distance, summary=summary, rephrase=rephrase,
 							   rephrase_prompt=rephrase_prompt, add_style=add_style, style=style, add_search=add_search,
 							   search=search, reset_journey=reset_journey,unload_llm=unload_llm)
 
